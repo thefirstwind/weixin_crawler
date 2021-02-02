@@ -19,10 +19,12 @@ class CustomFlask(Flask):
 app = CustomFlask('WeixinCrawler',template_folder="./ui/templates",static_folder="./ui/static")
 # app = CustomFlask('WeixinCrawler',template_folder="./templates",static_folder="./static")
 app.config['SECRET_KEY'] = 'secret!'
-CORS(app, support_credentials=True)
-@app.route('/socket.io', methods=['POST', 'GET','OPTIONS'])
-@cross_origin(supports_credentials=True)
+app.config['CORS_AUTOMATIC_OPTIONS'] = True
+app.config['CORS_SUPPORTS_CREDENTIALS'] = True
+
 
 # socketio = SocketIO(app)
-socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
+# socketio = SocketIO(app, async_mode='gevent')
+socketio = SocketIO(app,cors_allowed_origins="*")
+
 the_redis = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
