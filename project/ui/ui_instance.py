@@ -22,6 +22,5 @@ app.config['SECRET_KEY'] = 'secret!'
 CORS(app)
 
 # socketio = SocketIO(app)
-socketio = SocketIO(app, async_mode='gevent')
-socketio.Server(cors_allowed_origins='*')
+socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
 the_redis = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
