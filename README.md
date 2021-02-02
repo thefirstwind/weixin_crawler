@@ -42,51 +42,167 @@ https://www.youtube.com/watch?v=CbfLRCV7oeU&t=8s
 
 ## 运行方法
 
-> #### Insatall  mongodb / redis / elasticsearch and run them in the background
-> 
-> 1. downlaod mongodb / redis / elasticsearch from their official sites and install them
-> 
-> 2. run them at the same time under the default configuration. In this case mongodb is localhost:27017 redis is localhost:6379(or you have to config in weixin_crawler/project/configs/auth.py)
-> 
-> #### Install proxy server and run proxy.js
-> 
-> 1. install nodejs and then npm install anyproxy and redis in weixin_crawler/proxy
-> 
-> 2. cd to weixin_crawler/proxy and run node proxy.js
-> 
-> 3. install anyproxy https CA in both computer and phone side
-> 
-> 4. if you are not sure how to use anyproxy, [here ](https://github.com/alibaba/anyproxy)is the doc
-> 
-> #### Install the needed python packages
-> 
-> 1. NOTE: you may can not simply type pip install -r requirements.txt to install every package, twist is one of them which is needed by scrapy
-> 
-> 2. I am not sure if your python enviroment will throw other package not found error, just install any package that is needed
-> 
-> #### Some source code have to be modified(maybe it is not reasonable)
-> 
-> 1. scrapy Python36\Lib\site-packages\scrapy\http\request\ \__init\__.py  --> weixin_crawler\source_code\request\\__init\__.py
-> 
-> 2. scrapy Python36\Lib\site-packages\scrapy\http\response\ \__init\__.py --> weixin_crawler\source_code\response\\\__init\__.py
-> 
-> 3. pyecharts Python36\Lib\site-packages\pyecharts\base.py --> weixin_crawler\source_code\base.py. In this case function get_echarts_options is added in line 106
-> 
-> #### If you want weixin_crawler work automatically those steps are necessary or you shoud operate the phone to get the request data that will be detected by Anyproxy manual
-> 
-> 1. Install abd and add it to your path(windows for example)
-> 
-> 2. install android emulator(NOX suggested) or plugin your phone and make sure you can operate them with abd from command line tools
-> 
-> 3. If mutiple phone are connected to your computer you have to find out their adb ports which will be used to add crawler
-> 
-> #### Run the main.py
-> 
-> Just run python weixin_crawler\project\main.py. Now open the browser and everything you want would be in localhost:5000.
-> 
-> In this long step list you may get stucked, join our community for help, tell us what you have done and what kind of error you have found.
-> 
-> Let's go to explore the world in localhost:5000 together
+#### Insatall  mongodb / redis / elasticsearch and run them in the background
+
+1. downlaod mongodb / redis / elasticsearch from their official sites and install them
+
+```
+############### update server 
+sudo apt update
+sudo apt upgrade
+sudo add-apt-repository universe
+sudo apt update
+
+############### python
+
+sudo apt install python3
+
+vi ~/.bashrc 
+# alias python=python3.7
+source ~/.bashrc
+
+sudo apt install -y python3-pip
+
+sudo apt install -y python3-dev build-essential libssl-dev libffi-dev libxml2 libxml2-dev libxslt1-dev zlib1g-dev libcurl4-openssl-dev
+
+
+############### mongodb
+sudo apt --reinstall install nginx
+sudo apt --reinstall install mongodb
+sudo systemctl enable mongodb
+sudo systemctl restart mongodb
+
+# mongodb://127.0.0.1:27017
+
+
+
+
+############### redis
+sudo apt install redis-server
+sudo vi /etc/redis/redis.conf
+# supervised systemd
+sudo systemctl enable redis-server
+sudo systemctl restart redis-server
+sudo /etc/init.d/redis-server restart
+
+
+
+############### elasticsearch
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+sudo apt update
+sudo apt install elasticsearch
+sudo systemctl enable elasticsearch
+sudo systemctl restart elasticsearch
+curl -X GET 'http://localhost:9200'
+
+
+############### node
+sudo apt remove nodejs npm
+sudo apt autoremove
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.4/install.sh | bash
+source ~/.profile
+
+
+nvm install --lts
+nvm list
+nvm alias default v14.15.4
+
+nvm use default
+npm install -g cnpm --registry=https://registry.npm.taobao.org  
+cnpm install --save lrz
+cnpm i cross-env --save-dev
+
+
+
+
+```
+
+2. run them at the same time under the default configuration. In this case mongodb is localhost:27017 redis is localhost:6379(or you have to config in weixin_crawler/project/configs/auth.py)
+
+#### Install proxy server and run proxy.js
+
+1. install nodejs and then npm install anyproxy and redis in weixin_crawler/proxy
+
+2. cd to weixin_crawler/proxy and run node proxy.js
+
+3. install anyproxy https CA in both computer and phone side
+
+4. if you are not sure how to use anyproxy, [here ](https://github.com/alibaba/anyproxy)is the doc
+
+```
+http://anyproxy.io/cn/#faq
+```
+#### Install the needed python packages
+
+1. NOTE: you may can not simply type pip install -r requirements.txt to install every package, twist is one of them which is needed by scrapy
+
+2. I am not sure if your python enviroment will throw other package not found error, just install any package that is needed
+
+```
+############# pip3 提速
+mkdir ~/.pip
+cd ~/.pip
+vi pip.conf
+
+[global]
+index-url = http://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host=mirrors.aliyun.com
+
+
+cd project
+pip install -r requirements.txt
+
+
+pip3 install --upgrade pip setuptools
+
+pip3 install --upgrade scrapy
+pip3 install --upgrade twisted
+pip3 install --upgrade flask
+pip3 install --upgrade bidict
+pip3 install --upgrade python-socketio
+pip3 install --upgrade flask_socketio
+pip3 install --upgrade gevent
+pip3 install --upgrade pymongo
+pip3 install --upgrade redis
+pip3 install --upgrade elasticsearch
+pip3 install --upgrade Pillow
+pip3 install --upgrade numpy
+pip3 install --upgrade pandas
+pip3 install --upgrade pyecharts
+pip3 install --upgrade pypinyin
+```
+#### Some source code have to be modified(maybe it is not reasonable)
+
+1. scrapy Python36\Lib\site-packages\scrapy\http\request\ \__init\__.py  --> weixin_crawler\source_code\request\\__init\__.py
+```
+cp -a ~/.local/lib/python3.6/site-packages/scrapy/http/request/__init__.py ~/projects/weixin_crawler/source_code/request
+```
+2. scrapy Python36\Lib\site-packages\scrapy\http\response\ \__init\__.py --> weixin_crawler\source_code\response\\\__init\__.py
+```
+cp -a ~/.local/lib/python3.6/site-packages/scrapy/http/response/__init__.py ~/projects/weixin_crawler/source_code/response
+```
+
+3. pyecharts Python36\Lib\site-packages\pyecharts\base.py --> weixin_crawler\source_code\base.py. In this case function get_echarts_options is added in line 106
+
+#### If you want weixin_crawler work automatically those steps are necessary or you shoud operate the phone to get the request data that will be detected by Anyproxy manual
+
+1. Install abd and add it to your path(windows for example)
+
+2. install android emulator(NOX suggested) or plugin your phone and make sure you can operate them with abd from command line tools
+
+3. If mutiple phone are connected to your computer you have to find out their adb ports which will be used to add crawler
+
+#### Run the main.py
+```
+python weixin_crawler/project/main.py
+```
+Just run python weixin_crawler\project\main.py. Now open the browser and everything you want would be in localhost:5000.
+
+In this long step list you may get stucked, join our community for help, tell us what you have done and what kind of error you have found.
+
+Let's go to explore the world in localhost:5000 together
 
 ## 功能展示
 

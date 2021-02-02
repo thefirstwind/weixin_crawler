@@ -1,5 +1,6 @@
 scrapy
 twisted
+pywin32
 flask
 bidict
 python-socketio
@@ -13,4 +14,3 @@ numpy
 pandas
 pyecharts
 pypinyin
-baidu_aip
