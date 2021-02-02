@@ -19,6 +19,7 @@ class CustomFlask(Flask):
 app = CustomFlask('WeixinCrawler',template_folder="./ui/templates",static_folder="./ui/static")
 # app = CustomFlask('WeixinCrawler',template_folder="./templates",static_folder="./static")
 app.config['SECRET_KEY'] = 'secret!'
+app.config['origin'] = "http://localhost:5000"
 app.config['Access-Control-Allow-Origin'] = "http://localhost:5000"
 app.config['Access-Control-Allow-Credentials'] = True
 app.config['Access-Control-Allow-Headers'] ='Origin,X-Requested-With,Content-Type,Accept,content-type,application/json,Authorization'
