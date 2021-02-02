@@ -1,6 +1,7 @@
 # import eventlet
 # eventlet.monkey_patch()
 from flask import Flask
+from flask_cors import CORS
 from flask_socketio import SocketIO
 import redis
 from configs.auth import REDIS_HOST,REDIS_PORT,REDIS_DB
@@ -18,10 +19,7 @@ class CustomFlask(Flask):
 app = CustomFlask('WeixinCrawler',template_folder="./ui/templates",static_folder="./ui/static")
 # app = CustomFlask('WeixinCrawler',template_folder="./templates",static_folder="./static")
 app.config['SECRET_KEY'] = 'secret!'
-app.config['CORS_HEADERS'] = 'Content-Type'
-
-cors = CORS(app, resources={r"/foo": {"origins": "http://127.0.0.0:5000"}})
-@cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
+CORS(app)
 
 # socketio = SocketIO(app)
 socketio = SocketIO(app, async_mode='gevent')
