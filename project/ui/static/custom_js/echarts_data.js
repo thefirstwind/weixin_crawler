@@ -13,7 +13,7 @@ function eConsole(param) {
         url_data['date'] = param.name;
         url_data['url'] = decodeURIComponent(location.href,true);
         console.log(url_data);
-        $.post('http://localhost:5000/raw_article', (url_data));
+        $.post('http://118.190.146.172:5000/raw_article', (url_data));
     }
 }
 

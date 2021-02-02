@@ -1,7 +1,7 @@
 // 和服务器进行数据通信绑定
 
-console.log('创建wobsocket 通信')
-var socket = io.connect('http://localhost:5000');
+console.log('创建websocket 通信')
+var socket = io.connect('http://118.190.146.172:5000');
 
 // 绑定和服务器连接成功信息
 socket.on('connect', function() {

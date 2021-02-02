@@ -44,7 +44,7 @@ $(document).on('click', 'button#gen_excel_btn', function(evt){
     var result = $('#gen_excel_data').serialize();
     //解码数据
     result = decodeURIComponent(result,true)
-    $.post('http://localhost:5000/export_excel', result)
+    $.post('http://118.190.146.172:5000/export_excel', result)
 });
 
 // 添加公众号类别 add_gzh_category

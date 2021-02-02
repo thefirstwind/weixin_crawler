@@ -65,8 +65,8 @@
                 </thead>
                 <tbody>
                 <tr v-for="gzh in gzhs['data']">
-                    <td title="单击查看公众号报告"><a target="_blank" v-bind:href="'http://localhost:5000/gzh_report/'+gzh.nickname+''">{{ gzh['nickname'] }}</td>
-                    <td title="点击查看文章列表"><a title="查看全部文章列表" target="_blank" v-bind:href="'http://localhost:5000/gzh_article_list/'+gzh.nickname+''">{{ gzh['article_num'] }}</a></td>
+                    <td title="单击查看公众号报告"><a target="_blank" v-bind:href="'http://118.190.146.172:5000/gzh_report/'+gzh.nickname+''">{{ gzh['nickname'] }}</td>
+                    <td title="点击查看文章列表"><a title="查看全部文章列表" target="_blank" v-bind:href="'http://118.190.146.172:5000/gzh_article_list/'+gzh.nickname+''">{{ gzh['article_num'] }}</a></td>
                     <td>{{ gzh['update_time'] }}</td>
                     <td>{{ gzh['update_num'] }}</td>
                 </tr>

@@ -1,5 +1,5 @@
 console.log('创建wobsocket 通信')
-var socket = io.connect('http://localhost:5000');
+var socket = io.connect('http://118.190.146.172:5000');
 
 //记录当前请求页面信息
 var search_result_page_info ={
