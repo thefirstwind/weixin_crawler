@@ -19,7 +19,12 @@ class CustomFlask(Flask):
 app = CustomFlask('WeixinCrawler',template_folder="./ui/templates",static_folder="./ui/static")
 # app = CustomFlask('WeixinCrawler',template_folder="./templates",static_folder="./static")
 app.config['SECRET_KEY'] = 'secret!'
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app, resources={r"/socket.io": {"origins": "http://118.190.146.172:5000"}})
+
 CORS(app)
+@app.route("/")
+@cross_origin(origin='118.190.146.172',headers=['Content- Type','Authorization'])
 
 # socketio = SocketIO(app)
 socketio = SocketIO(app, async_mode='gevent', cors_allowed_origins="*")
